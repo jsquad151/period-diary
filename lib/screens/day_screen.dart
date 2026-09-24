@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../data/date_utils.dart';
 import '../data/day_status.dart';
 import '../providers.dart';
+import '../widgets/entry_list.dart';
 
 class DayScreen extends ConsumerWidget {
   const DayScreen({super.key, required this.date});
@@ -58,8 +59,16 @@ class DayScreen extends ConsumerWidget {
                       onPressed: () => repo.markQuiet(date),
                     ),
             const SizedBox(height: 20),
-            Text('What did you notice?', style: theme.textTheme.titleMedium),
+            Text('Add an observation', style: theme.textTheme.titleMedium),
             const SizedBox(height: 8),
+            FilledButton.tonalIcon(
+              key: const Key('addFluid'),
+              icon: const Icon(Icons.water_drop),
+              label: const Text('Bleeding / discharge'),
+              onPressed: () => context.push('/day/$date/fluid'),
+            ),
+            EntryList(date: date),
+            const SizedBox(height: 20),
             _DailyNoteField(date: date),
           ],
         ),

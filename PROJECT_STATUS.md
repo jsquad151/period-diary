@@ -1,17 +1,16 @@
 # Project status
 
-Last updated: milestone 2 (calendar + daily detail).
+Last updated: milestone 3 (fluid observations).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
-  local-date helpers, day-status derivation, repository, 21 unit tests.
 - M2: theme, bottom navigation, calendar with icon markers, daily detail, "Nothing notable today" (+undo), daily note, widget tests.
+- M3: fluid observation form (chips, clot detail, multiple per day), entry list with edit, delete + undo, widget tests.
 
 ## Currently working
-- M3: fluid observation form (multiple per day).
+- M4: libido, mood, physical symptom events.
 
 ## Not yet implemented (planned order)
-3. Fluid observation form (multiple per day)
 4. Libido / mood / symptom events, edit + delete with undo
 5. Catch-up flow, reconstructed/historical entries, context events
 6. Timeline, search and filters
