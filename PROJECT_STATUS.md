@@ -1,6 +1,6 @@
 # Project status
 
-Last updated: milestone 5 (catch-up, health context).
+Last updated: milestone 6 (timeline, search, filters).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
@@ -8,12 +8,12 @@ Last updated: milestone 5 (catch-up, health context).
 - M3: fluid observation form (chips, clot detail, multiple per day), entry list with edit, delete + undo, widget tests.
 - M4: libido, mood, physical-symptom forms (pain details only for pain symptoms); prototype journey test incl. close/reopen persistence.
 - M5: catch-up banner + flow (nothing notable / add something / I don't remember), health-context events with approximate dates, Settings screen.
+- M6: timeline (newest first, gaps omitted), notes search, filter sheet (colour, amount, texture, blood, clot, libido, mood, symptom, dates, source, quiet days).
 
 ## Currently working
-- M6: timeline, search and filters.
+- M7: JSON + CSV export, JSON import/restore, delete-all.
 
 ## Not yet implemented (planned order)
-6. Timeline, search and filters
 7. JSON + CSV export, JSON import/restore, delete-all
 8. Descriptive insights, PDF report, optional daily reminder
 9. Widget + integration tests, release APK

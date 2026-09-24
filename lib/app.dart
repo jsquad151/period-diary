@@ -9,7 +9,9 @@ import 'screens/day_screen.dart';
 import 'screens/event_forms.dart';
 import 'screens/fluid_form_screen.dart';
 import 'screens/placeholder_screen.dart';
+import 'screens/search_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/timeline_screen.dart';
 import 'theme.dart';
 
 GoRouter createRouter() => GoRouter(
@@ -24,7 +26,7 @@ GoRouter createRouter() => GoRouter(
         StatefulShellBranch(routes: [
           GoRoute(
               path: '/timeline',
-              builder: (_, _) => const PlaceholderScreen(title: 'Timeline')),
+              builder: (_, _) => const TimelineScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
@@ -34,7 +36,7 @@ GoRouter createRouter() => GoRouter(
         StatefulShellBranch(routes: [
           GoRoute(
               path: '/search',
-              builder: (_, _) => const PlaceholderScreen(title: 'Search')),
+              builder: (_, _) => const SearchScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(

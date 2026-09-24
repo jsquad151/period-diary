@@ -4,7 +4,9 @@ import 'data/catchup.dart';
 import 'data/database.dart';
 import 'data/date_utils.dart';
 import 'data/day_status.dart';
+import 'data/entries.dart';
 import 'data/repository.dart';
+import 'data/timeline.dart';
 
 /// Overridden in main() (real file) and in tests (in-memory).
 final databaseProvider = Provider<AppDatabase>((ref) {
@@ -83,3 +85,18 @@ final missedDaysProvider = Provider<List<String>>((ref) {
     skipped: ref.watch(skippedCatchupProvider),
   );
 });
+
+/// Every recorded event as a display-ready entry.
+final allEntriesProvider = Provider<List<DayEntry>>((ref) => [
+      for (final f in ref.watch(fluidsProvider).value ?? const []) entryFromFluid(f),
+      for (final l in ref.watch(libidosProvider).value ?? const []) entryFromLibido(l),
+      for (final m in ref.watch(moodsProvider).value ?? const []) entryFromMood(m),
+      for (final s in ref.watch(symptomsProvider).value ?? const []) entryFromSymptom(s),
+    ]);
+
+final timelineProvider = Provider<List<TimelineDay>>((ref) => buildTimeline(
+      entries: ref.watch(allEntriesProvider),
+      summaries: ref.watch(daySummariesProvider),
+      notes: ref.watch(dailyNotesProvider).value ?? const [],
+      contexts: ref.watch(contextEventsProvider).value ?? const [],
+    ));
