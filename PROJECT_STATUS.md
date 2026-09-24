@@ -1,6 +1,6 @@
 # Project status
 
-Last updated: milestone 8 (insights, PDF report, reminder).
+Last updated: milestone 9 (release build, docs).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
@@ -11,14 +11,16 @@ Last updated: milestone 8 (insights, PDF report, reminder).
 - M6: timeline (newest first, gaps omitted), notes search, filter sheet (colour, amount, texture, blood, clot, libido, mood, symptom, dates, source, quiet days).
 - M7: JSON backup export (save dialog), CSV export (share sheet, 7 files), validated transactional import (merge or replace, preview first), typed-confirmation delete-all, last-export indicator.
 - M8: descriptive Insights (coverage, counts, brown run, gap between red-blood runs, non-causal associations), PDF summary report, optional daily reminder (bland text, off by default). Fixed Android build (upgraded notifications plugin, enabled desugaring).
+- M9: README, release APKs (arm64 23.6 MB), gitignore cleanup, release shrinking disabled for safety.
 
 ## Currently working
-- M9: README, end-to-end test, release APK.
+- Next: install on the phone and try it; fix whatever real-device use turns up.
 
-## Not yet implemented (planned order)
-9. Widget + integration tests, release APK
+## Not yet implemented
 
 ## Known bugs
+- Never run on a real Android device or emulator (none available during development); only desktop-runner tests. First install is the first real test.
+- No on-device integration_test yet.
 - none yet
 
 ## Decisions requiring product-owner review

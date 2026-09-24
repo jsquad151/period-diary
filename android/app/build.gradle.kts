@@ -29,9 +29,15 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // Personal-use app installed directly on a phone (never published), so the
+            // debug signing key is fine. If you ever reinstall from a machine with a
+            // different debug key, uninstall first (this deletes the app's data:
+            // export a backup before!).
             signingConfig = signingConfigs.getByName("debug")
+            // Code shrinking can break plugins in ways that only show up on a device;
+            // the size saving isn't worth that risk here.
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }
