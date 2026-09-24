@@ -3,10 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'screens/calendar_screen.dart';
+import 'screens/catchup_screen.dart';
+import 'screens/context_screens.dart';
 import 'screens/day_screen.dart';
 import 'screens/event_forms.dart';
 import 'screens/fluid_form_screen.dart';
 import 'screens/placeholder_screen.dart';
+import 'screens/settings_screen.dart';
 import 'theme.dart';
 
 GoRouter createRouter() => GoRouter(
@@ -36,8 +39,20 @@ GoRouter createRouter() => GoRouter(
         StatefulShellBranch(routes: [
           GoRoute(
               path: '/settings',
-              builder: (_, _) => const PlaceholderScreen(title: 'Settings')),
+              builder: (_, _) => const SettingsScreen()),
         ]),
+      ],
+    ),
+    GoRoute(path: '/catchup', builder: (_, _) => const CatchUpScreen()),
+    GoRoute(
+      path: '/context',
+      builder: (_, _) => const ContextListScreen(),
+      routes: [
+        GoRoute(
+          path: 'edit',
+          builder: (_, state) =>
+              ContextFormScreen(editId: state.uri.queryParameters['id']),
+        ),
       ],
     ),
     GoRoute(

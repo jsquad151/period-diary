@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'data/catchup.dart';
 import 'data/database.dart';
+import 'data/date_utils.dart';
 import 'data/day_status.dart';
 import 'data/repository.dart';
 
@@ -56,5 +58,28 @@ final daySummariesProvider = Provider<Map<String, DaySummary>>((ref) {
     moods: ref.watch(moodsProvider).value ?? const [],
     symptoms: ref.watch(symptomsProvider).value ?? const [],
     notes: ref.watch(dailyNotesProvider).value ?? const [],
+  );
+});
+
+final settingsProvider = StreamProvider<List<Setting>>((ref) {
+  final db = ref.watch(databaseProvider);
+  return db.select(db.settings).watch();
+});
+
+/// Dates the user answered "I don't remember" to; they stay blank but aren't re-asked.
+final skippedCatchupProvider = Provider<Set<String>>((ref) {
+  final rows = ref.watch(settingsProvider).value ?? const [];
+  for (final r in rows) {
+    if (r.key == Repository.skippedCatchupKey) return Repository.decodeSkipped(r.value);
+  }
+  return <String>{};
+});
+
+/// Recent unrecorded days offered to the catch-up flow.
+final missedDaysProvider = Provider<List<String>>((ref) {
+  return missedDays(
+    today: formatLocalDate(DateTime.now()),
+    summaries: ref.watch(daySummariesProvider),
+    skipped: ref.watch(skippedCatchupProvider),
   );
 });

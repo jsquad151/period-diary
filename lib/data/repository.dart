@@ -237,6 +237,61 @@ class Repository {
   Future<void> restoreSymptom(PhysicalSymptom row) =>
       db.into(db.physicalSymptoms).insertOnConflictUpdate(row);
 
+  // ---- Context events (imprecise dates) ----
+
+  Future<String> saveContext({
+    String? id,
+    required String datePrecision,
+    required String dateStart,
+    String? dateEnd,
+    required String type,
+    required String title,
+    String? notes,
+    DateTime? now,
+  }) async {
+    final stamp = nowStamp(now);
+    final existing = id == null
+        ? null
+        : await (db.select(db.contextEvents)..where((t) => t.id.equals(id)))
+            .getSingleOrNull();
+    final rowId = id ?? newId();
+    await db.into(db.contextEvents).insertOnConflictUpdate(ContextEventsCompanion(
+          id: Value(rowId),
+          datePrecision: Value(datePrecision),
+          dateStart: Value(dateStart),
+          dateEnd: Value(datePrecision == 'range' ? dateEnd : null),
+          type: Value(type),
+          title: Value(title.trim()),
+          notes: Value(_blankToNull(notes)),
+          createdAt: Value(existing?.createdAt ?? stamp),
+          updatedAt: Value(stamp),
+        ));
+    return rowId;
+  }
+
+  Future<ContextEvent?> deleteContext(String id) async {
+    final row = await (db.select(db.contextEvents)..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
+    await (db.delete(db.contextEvents)..where((t) => t.id.equals(id))).go();
+    return row;
+  }
+
+  Future<void> restoreContext(ContextEvent row) =>
+      db.into(db.contextEvents).insertOnConflictUpdate(row);
+
+  // ---- Catch-up: days the user answered "I don't remember" ----
+
+  static const skippedCatchupKey = 'catchup_skipped';
+
+  Future<void> addSkippedCatchup(String date) async {
+    final current = decodeSkipped(await getSetting(skippedCatchupKey));
+    current.add(date);
+    await setSetting(skippedCatchupKey, (current.toList()..sort()).join(','));
+  }
+
+  static Set<String> decodeSkipped(String? raw) =>
+      (raw == null || raw.isEmpty) ? <String>{} : raw.split(',').toSet();
+
   // ---- Settings ----
 
   Future<String?> getSetting(String key) async {

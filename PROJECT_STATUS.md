@@ -1,18 +1,18 @@
 # Project status
 
-Last updated: milestone 4 (libido, mood, symptoms).
+Last updated: milestone 5 (catch-up, health context).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
 - M2: theme, bottom navigation, calendar with icon markers, daily detail, "Nothing notable today" (+undo), daily note, widget tests.
 - M3: fluid observation form (chips, clot detail, multiple per day), entry list with edit, delete + undo, widget tests.
 - M4: libido, mood, physical-symptom forms (pain details only for pain symptoms); prototype journey test incl. close/reopen persistence.
+- M5: catch-up banner + flow (nothing notable / add something / I don't remember), health-context events with approximate dates, Settings screen.
 
 ## Currently working
-- M5: catch-up flow, historical entries, context events.
+- M6: timeline, search and filters.
 
 ## Not yet implemented (planned order)
-5. Catch-up flow, reconstructed/historical entries, context events
 6. Timeline, search and filters
 7. JSON + CSV export, JSON import/restore, delete-all
 8. Descriptive insights, PDF report, optional daily reminder
@@ -22,6 +22,8 @@ Last updated: milestone 4 (libido, mood, symptoms).
 - none yet
 
 ## Decisions requiring product-owner review
+- Imprecise dates (approximate/range/month) are supported for health-context events; symptom and bleeding observations always belong to an exact calendar day (entered later they are tagged "remembered afterwards").
+- Catch-up looks back 7 days, never before the first recorded day, never includes today. "I don't remember" days stay blank but are not asked again.
 - Period *predictions* are deferred to V2 (brief §6/§58); V1 gets an optional
   daily check-in reminder instead.
 - A daily note counts as a "notable entry" for day status.

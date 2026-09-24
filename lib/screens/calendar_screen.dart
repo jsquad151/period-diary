@@ -6,6 +6,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../data/date_utils.dart';
 import '../data/day_status.dart';
 import '../providers.dart';
+import 'catchup_screen.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
@@ -49,6 +50,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const CatchUpBanner(),
               TableCalendar<void>(
                 firstDay: DateTime(2000),
                 lastDay: DateTime(today.year, today.month, today.day),

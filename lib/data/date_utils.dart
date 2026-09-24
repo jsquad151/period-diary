@@ -56,3 +56,19 @@ String shortDate(String date) =>
     DateFormat('d MMM').format(parseLocalDate(date));
 
 String monthYear(DateTime d) => DateFormat('MMMM yyyy').format(d);
+
+/// Human description of an imprecise date (brief §43).
+String describeDateEstimate(String precision, String start, String? end) {
+  switch (precision) {
+    case 'approximate':
+      return 'About ${DateFormat('d MMM yyyy').format(parseLocalDate(start))}';
+    case 'range':
+      final s = parseLocalDate(start);
+      final e = parseLocalDate(end ?? start);
+      return '${DateFormat('d MMM yyyy').format(s)} – ${DateFormat('d MMM yyyy').format(e)}';
+    case 'month_only':
+      return monthYear(parseLocalDate(start));
+    default:
+      return DateFormat('d MMM yyyy').format(parseLocalDate(start));
+  }
+}
