@@ -1,13 +1,14 @@
 # Project status
 
-Last updated: milestone 1 (data layer).
+Last updated: milestone 2 (calendar + daily detail).
 
 ## Completed
-- M1: Android-only Flutter scaffold, Drift/SQLite schema, controlled vocabularies,
+- M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
   local-date helpers, day-status derivation, repository, 21 unit tests.
+- M2: theme, bottom navigation, calendar with icon markers, daily detail, "Nothing notable today" (+undo), daily note, widget tests.
 
 ## Currently working
-- M2: theme, navigation shell, calendar, daily detail, "Nothing notable today".
+- M3: fluid observation form (multiple per day).
 
 ## Not yet implemented (planned order)
 3. Fluid observation form (multiple per day)
