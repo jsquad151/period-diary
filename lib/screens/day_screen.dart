@@ -61,11 +61,31 @@ class DayScreen extends ConsumerWidget {
             const SizedBox(height: 20),
             Text('Add an observation', style: theme.textTheme.titleMedium),
             const SizedBox(height: 8),
-            FilledButton.tonalIcon(
-              key: const Key('addFluid'),
-              icon: const Icon(Icons.water_drop),
-              label: const Text('Bleeding / discharge'),
-              onPressed: () => context.push('/day/$date/fluid'),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                _AddButton(
+                    key: const Key('addFluid'),
+                    icon: Icons.water_drop,
+                    label: 'Bleeding / discharge',
+                    onPressed: () => context.push('/day/$date/fluid')),
+                _AddButton(
+                    key: const Key('addSymptom'),
+                    icon: Icons.healing,
+                    label: 'Physical symptom',
+                    onPressed: () => context.push('/day/$date/symptom')),
+                _AddButton(
+                    key: const Key('addLibido'),
+                    icon: Icons.bolt,
+                    label: 'Unusual libido',
+                    onPressed: () => context.push('/day/$date/libido')),
+                _AddButton(
+                    key: const Key('addMood'),
+                    icon: Icons.sentiment_neutral,
+                    label: 'Unusual mood / emotion',
+                    onPressed: () => context.push('/day/$date/mood')),
+              ],
             ),
             EntryList(date: date),
             const SizedBox(height: 20),
@@ -162,4 +182,23 @@ class _DailyNoteFieldState extends ConsumerState<_DailyNoteField> {
       onChanged: (v) => ref.read(repositoryProvider).saveDailyNote(widget.date, v),
     );
   }
+}
+
+class _AddButton extends StatelessWidget {
+  const _AddButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+  });
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => FilledButton.tonalIcon(
+        icon: Icon(icon),
+        label: Text(label),
+        onPressed: onPressed,
+      );
 }

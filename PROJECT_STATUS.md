@@ -1,17 +1,17 @@
 # Project status
 
-Last updated: milestone 3 (fluid observations).
+Last updated: milestone 4 (libido, mood, symptoms).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
 - M2: theme, bottom navigation, calendar with icon markers, daily detail, "Nothing notable today" (+undo), daily note, widget tests.
 - M3: fluid observation form (chips, clot detail, multiple per day), entry list with edit, delete + undo, widget tests.
+- M4: libido, mood, physical-symptom forms (pain details only for pain symptoms); prototype journey test incl. close/reopen persistence.
 
 ## Currently working
-- M4: libido, mood, physical symptom events.
+- M5: catch-up flow, historical entries, context events.
 
 ## Not yet implemented (planned order)
-4. Libido / mood / symptom events, edit + delete with undo
 5. Catch-up flow, reconstructed/historical entries, context events
 6. Timeline, search and filters
 7. JSON + CSV export, JSON import/restore, delete-all

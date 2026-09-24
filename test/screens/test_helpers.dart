@@ -6,8 +6,8 @@ import 'package:period_diary/data/database.dart';
 import 'package:period_diary/providers.dart';
 
 /// Pumps the whole app on an in-memory database.
-Future<AppDatabase> pumpApp(WidgetTester tester) async {
-  final db = AppDatabase.memory();
+Future<AppDatabase> pumpApp(WidgetTester tester, {AppDatabase? existing}) async {
+  final db = existing ?? AppDatabase.memory();
   await tester.pumpWidget(ProviderScope(
     overrides: [databaseProvider.overrideWithValue(db)],
     child: const CycleTrackerApp(),
@@ -24,8 +24,8 @@ Future<void> settle(WidgetTester tester) async {
 }
 
 /// Tears the app down so drift's stream-cleanup timers don't outlive the test.
-Future<void> disposeApp(WidgetTester tester, AppDatabase db) async {
+Future<void> disposeApp(WidgetTester tester, AppDatabase db, {bool closeDb = true}) async {
   await tester.pumpWidget(const SizedBox.shrink());
   await tester.pump(const Duration(milliseconds: 10));
-  await tester.runAsync(db.close);
+  if (closeDb) await tester.runAsync(db.close);
 }

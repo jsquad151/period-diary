@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import 'screens/calendar_screen.dart';
 import 'screens/day_screen.dart';
+import 'screens/event_forms.dart';
 import 'screens/fluid_form_screen.dart';
 import 'screens/placeholder_screen.dart';
 import 'theme.dart';
@@ -46,6 +47,27 @@ GoRouter createRouter() => GoRouter(
         GoRoute(
           path: 'fluid',
           builder: (_, state) => FluidFormScreen(
+            date: state.pathParameters['date']!,
+            editId: state.uri.queryParameters['id'],
+          ),
+        ),
+        GoRoute(
+          path: 'libido',
+          builder: (_, state) => LibidoFormScreen(
+            date: state.pathParameters['date']!,
+            editId: state.uri.queryParameters['id'],
+          ),
+        ),
+        GoRoute(
+          path: 'mood',
+          builder: (_, state) => MoodFormScreen(
+            date: state.pathParameters['date']!,
+            editId: state.uri.queryParameters['id'],
+          ),
+        ),
+        GoRoute(
+          path: 'symptom',
+          builder: (_, state) => SymptomFormScreen(
             date: state.pathParameters['date']!,
             editId: state.uri.queryParameters['id'],
           ),
