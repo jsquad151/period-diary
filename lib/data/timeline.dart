@@ -30,7 +30,7 @@ List<TimelineDay> buildTimeline({
     at(e.localDate).entries.add(e);
   }
   for (final n in notes) {
-    if (n.text_.trim().isNotEmpty) at(n.localDate).note = n.text_;
+    if (n.body.trim().isNotEmpty) at(n.localDate).note = n.body;
   }
   for (final c in contexts) {
     at(c.dateStart).contexts.add(c);

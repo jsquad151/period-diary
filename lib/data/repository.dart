@@ -53,7 +53,7 @@ class Repository {
     }
     await db.into(db.dailyNotes).insertOnConflictUpdate(DailyNotesCompanion.insert(
           localDate: date,
-          text_: text.trim(),
+          body: text.trim(),
           updatedAt: nowStamp(),
         ));
   }
@@ -282,6 +282,7 @@ class Repository {
   // ---- Catch-up: days the user answered "I don't remember" ----
 
   static const skippedCatchupKey = 'catchup_skipped';
+  static const lastExportKey = 'last_export_at';
 
   Future<void> addSkippedCatchup(String date) async {
     final current = decodeSkipped(await getSetting(skippedCatchupKey));
@@ -291,6 +292,15 @@ class Repository {
 
   static Set<String> decodeSkipped(String? raw) =>
       (raw == null || raw.isEmpty) ? <String>{} : raw.split(',').toSet();
+
+  // ---- Delete everything ----
+
+  /// Permanently removes all records and settings.
+  Future<void> deleteAllData() => db.transaction(() async {
+        for (final table in db.allTables) {
+          await db.delete(table).go();
+        }
+      });
 
   // ---- Settings ----
 

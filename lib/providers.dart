@@ -5,6 +5,7 @@ import 'data/database.dart';
 import 'data/date_utils.dart';
 import 'data/day_status.dart';
 import 'data/entries.dart';
+import 'data/file_gateway.dart';
 import 'data/repository.dart';
 import 'data/timeline.dart';
 
@@ -100,3 +101,14 @@ final timelineProvider = Provider<List<TimelineDay>>((ref) => buildTimeline(
       notes: ref.watch(dailyNotesProvider).value ?? const [],
       contexts: ref.watch(contextEventsProvider).value ?? const [],
     ));
+
+/// Real file pickers in the app; replaced by a fake in tests.
+final fileGatewayProvider = Provider<FileGateway>((ref) => const PluginFileGateway());
+
+/// ISO timestamp of the last successful JSON export, if any.
+final lastExportProvider = Provider<String?>((ref) {
+  for (final r in ref.watch(settingsProvider).value ?? const <Setting>[]) {
+    if (r.key == Repository.lastExportKey) return r.value;
+  }
+  return null;
+});

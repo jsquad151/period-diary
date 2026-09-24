@@ -155,7 +155,7 @@ class _DailyNoteFieldState extends ConsumerState<_DailyNoteField> {
         .getSingleOrNull();
     if (!mounted) return;
     setState(() {
-      _controller.text = row?.text_ ?? '';
+      _controller.text = row?.body ?? '';
       _loaded = true;
     });
   }

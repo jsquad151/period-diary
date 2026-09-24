@@ -67,7 +67,7 @@ Map<String, DaySummary> buildDaySummaries({
     at(s.localDate).symptomCount++;
   }
   for (final n in notes) {
-    if (n.text_.trim().isNotEmpty) at(n.localDate).hasNote = true;
+    if (n.body.trim().isNotEmpty) at(n.localDate).hasNote = true;
   }
   return map;
 }

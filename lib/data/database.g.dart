@@ -290,10 +290,10 @@ class $DailyNotesTable extends DailyNotes
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _text_Meta = const VerificationMeta('text_');
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
   @override
-  late final GeneratedColumn<String> text_ = GeneratedColumn<String>(
-    'text',
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'body',
     aliasedName,
     false,
     type: DriftSqlType.string,
@@ -311,7 +311,7 @@ class $DailyNotesTable extends DailyNotes
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [localDate, text_, updatedAt];
+  List<GeneratedColumn> get $columns => [localDate, body, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -332,13 +332,13 @@ class $DailyNotesTable extends DailyNotes
     } else if (isInserting) {
       context.missing(_localDateMeta);
     }
-    if (data.containsKey('text')) {
+    if (data.containsKey('body')) {
       context.handle(
-        _text_Meta,
-        text_.isAcceptableOrUnknown(data['text']!, _text_Meta),
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['body']!, _bodyMeta),
       );
     } else if (isInserting) {
-      context.missing(_text_Meta);
+      context.missing(_bodyMeta);
     }
     if (data.containsKey('updated_at')) {
       context.handle(
@@ -361,9 +361,9 @@ class $DailyNotesTable extends DailyNotes
         DriftSqlType.string,
         data['${effectivePrefix}local_date'],
       )!,
-      text_: attachedDatabase.typeMapping.read(
+      body: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}text'],
+        data['${effectivePrefix}body'],
       )!,
       updatedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -380,18 +380,18 @@ class $DailyNotesTable extends DailyNotes
 
 class DailyNote extends DataClass implements Insertable<DailyNote> {
   final String localDate;
-  final String text_;
+  final String body;
   final String updatedAt;
   const DailyNote({
     required this.localDate,
-    required this.text_,
+    required this.body,
     required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_date'] = Variable<String>(localDate);
-    map['text'] = Variable<String>(text_);
+    map['body'] = Variable<String>(body);
     map['updated_at'] = Variable<String>(updatedAt);
     return map;
   }
@@ -399,7 +399,7 @@ class DailyNote extends DataClass implements Insertable<DailyNote> {
   DailyNotesCompanion toCompanion(bool nullToAbsent) {
     return DailyNotesCompanion(
       localDate: Value(localDate),
-      text_: Value(text_),
+      body: Value(body),
       updatedAt: Value(updatedAt),
     );
   }
@@ -411,7 +411,7 @@ class DailyNote extends DataClass implements Insertable<DailyNote> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return DailyNote(
       localDate: serializer.fromJson<String>(json['localDate']),
-      text_: serializer.fromJson<String>(json['text_']),
+      body: serializer.fromJson<String>(json['body']),
       updatedAt: serializer.fromJson<String>(json['updatedAt']),
     );
   }
@@ -420,21 +420,21 @@ class DailyNote extends DataClass implements Insertable<DailyNote> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'localDate': serializer.toJson<String>(localDate),
-      'text_': serializer.toJson<String>(text_),
+      'body': serializer.toJson<String>(body),
       'updatedAt': serializer.toJson<String>(updatedAt),
     };
   }
 
-  DailyNote copyWith({String? localDate, String? text_, String? updatedAt}) =>
+  DailyNote copyWith({String? localDate, String? body, String? updatedAt}) =>
       DailyNote(
         localDate: localDate ?? this.localDate,
-        text_: text_ ?? this.text_,
+        body: body ?? this.body,
         updatedAt: updatedAt ?? this.updatedAt,
       );
   DailyNote copyWithCompanion(DailyNotesCompanion data) {
     return DailyNote(
       localDate: data.localDate.present ? data.localDate.value : this.localDate,
-      text_: data.text_.present ? data.text_.value : this.text_,
+      body: data.body.present ? data.body.value : this.body,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
@@ -443,51 +443,51 @@ class DailyNote extends DataClass implements Insertable<DailyNote> {
   String toString() {
     return (StringBuffer('DailyNote(')
           ..write('localDate: $localDate, ')
-          ..write('text_: $text_, ')
+          ..write('body: $body, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(localDate, text_, updatedAt);
+  int get hashCode => Object.hash(localDate, body, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is DailyNote &&
           other.localDate == this.localDate &&
-          other.text_ == this.text_ &&
+          other.body == this.body &&
           other.updatedAt == this.updatedAt);
 }
 
 class DailyNotesCompanion extends UpdateCompanion<DailyNote> {
   final Value<String> localDate;
-  final Value<String> text_;
+  final Value<String> body;
   final Value<String> updatedAt;
   final Value<int> rowid;
   const DailyNotesCompanion({
     this.localDate = const Value.absent(),
-    this.text_ = const Value.absent(),
+    this.body = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   DailyNotesCompanion.insert({
     required String localDate,
-    required String text_,
+    required String body,
     required String updatedAt,
     this.rowid = const Value.absent(),
   }) : localDate = Value(localDate),
-       text_ = Value(text_),
+       body = Value(body),
        updatedAt = Value(updatedAt);
   static Insertable<DailyNote> custom({
     Expression<String>? localDate,
-    Expression<String>? text_,
+    Expression<String>? body,
     Expression<String>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (localDate != null) 'local_date': localDate,
-      if (text_ != null) 'text': text_,
+      if (body != null) 'body': body,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -495,13 +495,13 @@ class DailyNotesCompanion extends UpdateCompanion<DailyNote> {
 
   DailyNotesCompanion copyWith({
     Value<String>? localDate,
-    Value<String>? text_,
+    Value<String>? body,
     Value<String>? updatedAt,
     Value<int>? rowid,
   }) {
     return DailyNotesCompanion(
       localDate: localDate ?? this.localDate,
-      text_: text_ ?? this.text_,
+      body: body ?? this.body,
       updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
@@ -513,8 +513,8 @@ class DailyNotesCompanion extends UpdateCompanion<DailyNote> {
     if (localDate.present) {
       map['local_date'] = Variable<String>(localDate.value);
     }
-    if (text_.present) {
-      map['text'] = Variable<String>(text_.value);
+    if (body.present) {
+      map['body'] = Variable<String>(body.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = Variable<String>(updatedAt.value);
@@ -529,7 +529,7 @@ class DailyNotesCompanion extends UpdateCompanion<DailyNote> {
   String toString() {
     return (StringBuffer('DailyNotesCompanion(')
           ..write('localDate: $localDate, ')
-          ..write('text_: $text_, ')
+          ..write('body: $body, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -4622,14 +4622,14 @@ typedef $$DayCheckInsTableProcessedTableManager =
 typedef $$DailyNotesTableCreateCompanionBuilder =
     DailyNotesCompanion Function({
       required String localDate,
-      required String text_,
+      required String body,
       required String updatedAt,
       Value<int> rowid,
     });
 typedef $$DailyNotesTableUpdateCompanionBuilder =
     DailyNotesCompanion Function({
       Value<String> localDate,
-      Value<String> text_,
+      Value<String> body,
       Value<String> updatedAt,
       Value<int> rowid,
     });
@@ -4648,8 +4648,8 @@ class $$DailyNotesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get text_ => $composableBuilder(
-    column: $table.text_,
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4673,8 +4673,8 @@ class $$DailyNotesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get text_ => $composableBuilder(
-    column: $table.text_,
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4696,8 +4696,8 @@ class $$DailyNotesTableAnnotationComposer
   GeneratedColumn<String> get localDate =>
       $composableBuilder(column: $table.localDate, builder: (column) => column);
 
-  GeneratedColumn<String> get text_ =>
-      $composableBuilder(column: $table.text_, builder: (column) => column);
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
 
   GeneratedColumn<String> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
@@ -4735,24 +4735,24 @@ class $$DailyNotesTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> localDate = const Value.absent(),
-                Value<String> text_ = const Value.absent(),
+                Value<String> body = const Value.absent(),
                 Value<String> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => DailyNotesCompanion(
                 localDate: localDate,
-                text_: text_,
+                body: body,
                 updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String localDate,
-                required String text_,
+                required String body,
                 required String updatedAt,
                 Value<int> rowid = const Value.absent(),
               }) => DailyNotesCompanion.insert(
                 localDate: localDate,
-                text_: text_,
+                body: body,
                 updatedAt: updatedAt,
                 rowid: rowid,
               ),

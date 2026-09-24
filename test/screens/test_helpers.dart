@@ -3,13 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:period_diary/app.dart';
 import 'package:period_diary/data/database.dart';
+import 'package:period_diary/data/file_gateway.dart';
 import 'package:period_diary/providers.dart';
 
 /// Pumps the whole app on an in-memory database.
-Future<AppDatabase> pumpApp(WidgetTester tester, {AppDatabase? existing}) async {
+Future<AppDatabase> pumpApp(WidgetTester tester,
+    {AppDatabase? existing, FileGateway? gateway}) async {
   final db = existing ?? AppDatabase.memory();
   await tester.pumpWidget(ProviderScope(
-    overrides: [databaseProvider.overrideWithValue(db)],
+    overrides: [
+      databaseProvider.overrideWithValue(db),
+      if (gateway != null) fileGatewayProvider.overrideWithValue(gateway),
+    ],
     child: const CycleTrackerApp(),
   ));
   await settle(tester);

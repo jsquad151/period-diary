@@ -150,7 +150,7 @@ SearchResults applyFilter(
       for (final r in moods) r.localDate,
       for (final r in symptoms) r.localDate,
       for (final n in notes)
-        if (n.text_.trim().isNotEmpty) n.localDate,
+        if (n.body.trim().isNotEmpty) n.localDate,
     };
     final days = [
       for (final c in checkIns)
@@ -221,8 +221,8 @@ SearchResults applyFilter(
   final noteHits = <NoteHit>[];
   if (q.isNotEmpty && !anySpecific && f.kinds.isEmpty && f.source == null) {
     for (final n in notes) {
-      if (inRange(n.localDate) && n.text_.toLowerCase().contains(q)) {
-        noteHits.add(NoteHit(n.localDate, n.text_));
+      if (inRange(n.localDate) && n.body.toLowerCase().contains(q)) {
+        noteHits.add(NoteHit(n.localDate, n.body));
       }
     }
     noteHits.sort((a, b) => b.date.compareTo(a.date));

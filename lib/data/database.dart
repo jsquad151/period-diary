@@ -36,7 +36,7 @@ class DayCheckIns extends Table {
 /// One free-text note per day.
 class DailyNotes extends Table {
   TextColumn get localDate => text()();
-  TextColumn get text_ => text().named('text')();
+  TextColumn get body => text()();
   TextColumn get updatedAt => text()();
 
   @override

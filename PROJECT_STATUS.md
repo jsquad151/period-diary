@@ -1,6 +1,6 @@
 # Project status
 
-Last updated: milestone 6 (timeline, search, filters).
+Last updated: milestone 7 (export, import, delete-all).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
@@ -9,12 +9,12 @@ Last updated: milestone 6 (timeline, search, filters).
 - M4: libido, mood, physical-symptom forms (pain details only for pain symptoms); prototype journey test incl. close/reopen persistence.
 - M5: catch-up banner + flow (nothing notable / add something / I don't remember), health-context events with approximate dates, Settings screen.
 - M6: timeline (newest first, gaps omitted), notes search, filter sheet (colour, amount, texture, blood, clot, libido, mood, symptom, dates, source, quiet days).
+- M7: JSON backup export (save dialog), CSV export (share sheet, 7 files), validated transactional import (merge or replace, preview first), typed-confirmation delete-all, last-export indicator.
 
 ## Currently working
-- M7: JSON + CSV export, JSON import/restore, delete-all.
+- M8: descriptive insights, PDF report, optional daily reminder.
 
 ## Not yet implemented (planned order)
-7. JSON + CSV export, JSON import/restore, delete-all
 8. Descriptive insights, PDF report, optional daily reminder
 9. Widget + integration tests, release APK
 
