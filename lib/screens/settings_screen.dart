@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../data/backup.dart';
 import '../data/date_utils.dart';
 import '../data/file_gateway.dart';
+import '../data/reminders.dart';
 import '../data/repository.dart';
 import '../providers.dart';
 
@@ -25,6 +26,8 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: const Text('Contraception, medication, illness and other events'),
             onTap: () => context.push('/context'),
           ),
+          const _SectionHeader('Reminder'),
+          const _ReminderTiles(),
           const _SectionHeader('Your data'),
           const ListTile(
             leading: Icon(Icons.lock_outline),
@@ -313,5 +316,68 @@ class _DeleteAllDialogState extends State<_DeleteAllDialog> {
         ),
       ],
     );
+  }
+}
+
+/// Optional daily "Anything notable today?" nudge. Off by default, no streaks.
+class _ReminderTiles extends ConsumerWidget {
+  const _ReminderTiles();
+
+  Future<void> _toggle(BuildContext context, WidgetRef ref, bool on) async {
+    final repo = ref.read(repositoryProvider);
+    final scheduler = ref.read(reminderSchedulerProvider);
+    final setting = ref.read(reminderSettingProvider);
+    if (!on) {
+      await scheduler.disable();
+      await repo.setSetting(reminderEnabledKey, '0');
+      return;
+    }
+    final t = parseReminderTime(setting.time)!;
+    final ok = await scheduler.enable(t.$1, t.$2);
+    if (!ok) {
+      if (context.mounted) {
+        _toast(context, 'Notifications are turned off for this app in Android settings.');
+      }
+      return;
+    }
+    await repo.setSetting(reminderEnabledKey, '1');
+    await repo.setSetting(reminderTimeKey, setting.time);
+  }
+
+  Future<void> _pickTime(BuildContext context, WidgetRef ref) async {
+    final setting = ref.read(reminderSettingProvider);
+    final t = parseReminderTime(setting.time)!;
+    final picked = await showTimePicker(
+        context: context, initialTime: TimeOfDay(hour: t.$1, minute: t.$2));
+    if (picked == null) return;
+    final value = formatReminderTime(picked.hour, picked.minute);
+    final repo = ref.read(repositoryProvider);
+    await repo.setSetting(reminderTimeKey, value);
+    if (setting.enabled) {
+      await ref.read(reminderSchedulerProvider).enable(picked.hour, picked.minute);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(reminderSettingProvider);
+    return Column(children: [
+      SwitchListTile(
+        key: const Key('reminderSwitch'),
+        secondary: const Icon(Icons.notifications_none),
+        title: const Text('Daily check-in reminder'),
+        subtitle: const Text('A quiet nudge that just says "Anything notable today?"'),
+        value: s.enabled,
+        onChanged: (v) => _toggle(context, ref, v),
+      ),
+      ListTile(
+        key: const Key('reminderTime'),
+        enabled: s.enabled,
+        leading: const Icon(Icons.schedule),
+        title: const Text('Reminder time'),
+        trailing: Text(s.time),
+        onTap: s.enabled ? () => _pickTime(context, ref) : null,
+      ),
+    ]);
   }
 }

@@ -6,6 +6,8 @@ import 'data/date_utils.dart';
 import 'data/day_status.dart';
 import 'data/entries.dart';
 import 'data/file_gateway.dart';
+import 'data/local_reminders.dart';
+import 'data/reminders.dart';
 import 'data/repository.dart';
 import 'data/timeline.dart';
 
@@ -111,4 +113,19 @@ final lastExportProvider = Provider<String?>((ref) {
     if (r.key == Repository.lastExportKey) return r.value;
   }
   return null;
+});
+
+/// Real notifications in the app; replaced by a fake in tests.
+final reminderSchedulerProvider =
+    Provider<ReminderScheduler>((ref) => LocalNotificationReminders());
+
+/// (enabled, HH:mm) of the daily reminder.
+final reminderSettingProvider = Provider<({bool enabled, String time})>((ref) {
+  var enabled = false;
+  var time = '20:00';
+  for (final r in ref.watch(settingsProvider).value ?? const <Setting>[]) {
+    if (r.key == reminderEnabledKey) enabled = r.value == '1';
+    if (r.key == reminderTimeKey && parseReminderTime(r.value) != null) time = r.value;
+  }
+  return (enabled: enabled, time: time);
 });

@@ -8,7 +8,7 @@ import 'screens/context_screens.dart';
 import 'screens/day_screen.dart';
 import 'screens/event_forms.dart';
 import 'screens/fluid_form_screen.dart';
-import 'screens/placeholder_screen.dart';
+import 'screens/insights_screen.dart';
 import 'screens/search_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/timeline_screen.dart';
@@ -31,7 +31,7 @@ GoRouter createRouter() => GoRouter(
         StatefulShellBranch(routes: [
           GoRoute(
               path: '/insights',
-              builder: (_, _) => const PlaceholderScreen(title: 'Insights')),
+              builder: (_, _) => const InsightsScreen()),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(

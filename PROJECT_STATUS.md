@@ -1,6 +1,6 @@
 # Project status
 
-Last updated: milestone 7 (export, import, delete-all).
+Last updated: milestone 8 (insights, PDF report, reminder).
 
 ## Completed
 - M1: scaffold, Drift schema, vocabularies, date helpers, day-status logic, repository, unit tests.
@@ -10,12 +10,12 @@ Last updated: milestone 7 (export, import, delete-all).
 - M5: catch-up banner + flow (nothing notable / add something / I don't remember), health-context events with approximate dates, Settings screen.
 - M6: timeline (newest first, gaps omitted), notes search, filter sheet (colour, amount, texture, blood, clot, libido, mood, symptom, dates, source, quiet days).
 - M7: JSON backup export (save dialog), CSV export (share sheet, 7 files), validated transactional import (merge or replace, preview first), typed-confirmation delete-all, last-export indicator.
+- M8: descriptive Insights (coverage, counts, brown run, gap between red-blood runs, non-causal associations), PDF summary report, optional daily reminder (bland text, off by default). Fixed Android build (upgraded notifications plugin, enabled desugaring).
 
 ## Currently working
-- M8: descriptive insights, PDF report, optional daily reminder.
+- M9: README, end-to-end test, release APK.
 
 ## Not yet implemented (planned order)
-8. Descriptive insights, PDF report, optional daily reminder
 9. Widget + integration tests, release APK
 
 ## Known bugs
